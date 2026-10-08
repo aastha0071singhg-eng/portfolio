@@ -1,0 +1,248 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: 'Kanit', sans-serif;
+  color: #D7E2EA;
+  background: #0C0C0C;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-optical-sizing: auto;
+  --ink: #0C0C0C;
+  --mist: #D7E2EA;
+  --ice: #AFC6D3;
+  --accent: #C36C42;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background: #0C0C0C;
+  scroll-behavior: smooth;
+  scrollbar-color: #687781 #0C0C0C;
+}
+
+body,
+#root {
+  min-width: 320px;
+  min-height: 100%;
+  background: #0C0C0C;
+}
+
+body {
+  overflow-x: clip;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+}
+
+::selection {
+  color: #0C0C0C;
+  background: #AFC6D3;
+}
+
+.hero-heading {
+  color: transparent;
+  background: linear-gradient(180deg, #646973 0%, #BBCCD7 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.site-shell {
+  overflow-x: clip;
+  background: #0C0C0C;
+}
+
+.hero-atmosphere {
+  background:
+    radial-gradient(ellipse at 51% 68%, rgba(91, 118, 134, 0.16), transparent 34%),
+    radial-gradient(ellipse at 5% 85%, rgba(92, 52, 42, 0.12), transparent 32%),
+    #0C0C0C;
+}
+
+.about-atmosphere {
+  background:
+    radial-gradient(ellipse at center, rgba(81, 107, 122, 0.13), transparent 48%),
+    #0C0C0C;
+}
+
+.marquee-track {
+  width: max-content;
+  will-change: transform;
+}
+
+.marquee-tile {
+  flex: 0 0 420px;
+  width: 420px;
+  height: 270px;
+  overflow: hidden;
+  border-radius: 16px;
+  background: #181a1c;
+}
+
+.marquee-tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (max-width: 639px) {
+  .marquee-tile {
+    flex-basis: 290px;
+    width: 290px;
+    height: 188px;
+    border-radius: 12px;
+  }
+}
+
+.portrait-image {
+  filter: drop-shadow(0 18px 70px rgba(98, 126, 143, 0.16));
+  background: rgba(13, 13, 13, 0.7);
+}
+
+.hero-portrait-wrap video {
+  display: block;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.project-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: #202326;
+}
+
+.contact-button {
+  padding: 0.75rem 2rem;
+  outline: 2px solid #fff;
+  outline-offset: -3px;
+  background: linear-gradient(123deg, #18011F 7%, #B600A8 37%, #7621B0 72%, #BE4C00 100%);
+  box-shadow: 0 4px 4px rgba(181, 1, 167, 0.25), 4px 4px 12px #7721B1 inset;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.contact-button svg {
+  flex: 0 0 auto;
+}
+
+.magnet-wrap {
+  will-change: transform;
+  transition: transform 0.6s ease-in-out;
+}
+
+.magnet-wrap.is-active {
+  transition: transform 0.3s ease-out;
+}
+
+.nav-link {
+  transition: opacity 200ms ease;
+}
+
+.nav-link:hover {
+  opacity: 0.7;
+}
+
+.about-copy {
+  font-size: clamp(1rem, 2vw, 1.35rem);
+  color: #D7E2EA;
+}
+
+.service-number {
+  font-size: clamp(3rem, 10vw, 140px);
+}
+
+.project-card {
+  top: calc(6rem + var(--stack-offset, 0px));
+}
+
+.project-number {
+  font-size: clamp(2.5rem, 6vw, 6rem);
+}
+
+.project-title {
+  font-size: clamp(1rem, 2.2vw, 2.1rem);
+}
+
+.live-project {
+  padding: 0.75rem 2rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+@media (max-width: 639px) {
+  .contact-button {
+    padding: 0.75rem 1.5rem;
+  }
+
+  .live-project {
+    padding: 0.6rem 0.75rem;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+  }
+
+  .live-project svg {
+    width: 0.75rem;
+    height: 0.75rem;
+    margin-left: 0.25rem;
+  }
+
+  .project-number {
+    font-size: clamp(2.1rem, 10vw, 3.5rem);
+  }
+
+  .project-card {
+    top: calc(5rem + var(--stack-offset, 0px));
+  }
+}
+
+@media (min-width: 640px) {
+  .contact-button {
+    padding: 0.875rem 2.5rem;
+    font-size: 0.875rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .project-card {
+    top: calc(8rem + var(--stack-offset, 0px));
+  }
+
+  .live-project {
+    padding: 0.875rem 2.5rem;
+    font-size: 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
