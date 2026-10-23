@@ -21,11 +21,11 @@ Then visit http://localhost:8000
 
 ## Edit content
 
-- Text, email, LinkedIn link: `index.html` (search for `aasthas.co@gmail.com` or `linkedin`).
+- Text, email, LinkedIn link: `index.html` (search for `aas0071thasingh@gmail.com` or `linkedin`).
 - Skill ribbon items: the `capabilities` list at the top of `script.js`.
 - Colours: the variables at the top of `style.css`.
 - Video / portrait: replace the files in `assets/` (keep the same names).
-- The ID card QR code encodes `mailto:aasthas.co@gmail.com`; regenerate it if the email changes.
+- The ID card QR code encodes `mailto:aas0071thasingh@gmail.com`; regenerate it if the email changes.
 
 ## Host for free
 
