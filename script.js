@@ -205,10 +205,28 @@ function setupMotion() {
   // Hero video drifts slower than the page; skill ribbons slide sideways
   const heroMedia = document.querySelector('.hero-media')
   const straps = document.querySelector('.straps')
+  const beyond = document.getElementById('beyond')
+  const beyondCols = beyond.querySelectorAll('.beyond-col')
   let ticking = false
+
+  // Beyond: side words start pushed outwards and faded, and slide in as the section scrolls into view
+  // (0 when its top enters at the bottom of the screen, 1 once its top reaches the top)
+  function updateBeyond() {
+    const rect = beyond.getBoundingClientRect()
+    const progress = Math.min(Math.max(1 - rect.top / window.innerHeight, 0), 1)
+    const scale = window.innerWidth < 768 ? 0.5 : 1
+    beyondCols.forEach((col, side) => {
+      const direction = side === 0 ? -1 : 1
+      col.style.opacity = 0.35 + progress * 0.65
+      ;[...col.children].forEach((word, i) => {
+        word.style.transform = `translateX(${direction * (60 + i * 40) * scale * (1 - progress)}px)`
+      })
+    })
+  }
 
   function onScroll() {
     ticking = false
+    updateBeyond()
     const y = window.scrollY
     if (y < window.innerHeight * 1.5) heroMedia.style.translate = `0 ${y * 0.25}px`
     const rect = straps.getBoundingClientRect()
@@ -223,7 +241,32 @@ function setupMotion() {
     if (!ticking) requestAnimationFrame(onScroll)
     ticking = true
   }, { passive: true })
+  window.addEventListener('resize', updateBeyond)
   onScroll()
+
+  // Beyond: photo tilts towards the mouse and the stacked title layers shift at different depths
+  beyond.addEventListener('pointermove', (event) => {
+    if (event.pointerType === 'touch') return
+    const rect = beyond.getBoundingClientRect()
+    beyond.style.setProperty('--px', (((event.clientX - rect.left) / rect.width) * 2 - 1).toFixed(3))
+    beyond.style.setProperty('--py', (((event.clientY - rect.top) / rect.height) * 2 - 1).toFixed(3))
+  })
+  beyond.addEventListener('pointerleave', () => {
+    beyond.style.setProperty('--px', 0)
+    beyond.style.setProperty('--py', 0)
+  })
+
+  // Section backgrounds: glow / dot grid follows the cursor (mouse and pen only)
+  document.querySelectorAll('.bg-interactive').forEach((section) => {
+    section.addEventListener('pointermove', (event) => {
+      if (event.pointerType === 'touch') return
+      const rect = section.getBoundingClientRect()
+      section.style.setProperty('--bx', `${event.clientX - rect.left}px`)
+      section.style.setProperty('--by', `${event.clientY - rect.top}px`)
+      section.classList.add('is-hover')
+    })
+    section.addEventListener('pointerleave', () => section.classList.remove('is-hover'))
+  })
 
   // Counter cards: glow follows the cursor
   document.querySelectorAll('.counter').forEach((card) => {
@@ -247,6 +290,46 @@ function setupMotion() {
   zone.addEventListener('pointerleave', () => { magnet.style.translate = '0 0' })
 }
 
+// ---------- Beyond: side words type themselves out when the section comes into view ----------
+
+function setupTyping() {
+  if (reducedMotion.matches) return
+  const columns = [...document.querySelectorAll('.beyond-col')].map((col) => [...col.children])
+  const words = columns.flat()
+  words.forEach((word) => { word.dataset.text = word.textContent })
+  let run = 0 // bumped on every enter/leave, so an older typing run stops itself
+
+  function typeWord(word, id) {
+    return new Promise((done) => {
+      const text = word.dataset.text
+      let i = 0
+      word.classList.add('is-typing')
+      const timer = setInterval(() => {
+        if (id === run) word.textContent = text.slice(0, ++i)
+        if (id !== run || i >= text.length) {
+          clearInterval(timer)
+          word.classList.remove('is-typing')
+          done()
+        }
+      }, 70)
+    })
+  }
+
+  // Row by row; the left and right word of each row type together
+  async function typeAll(id) {
+    words.forEach((word) => { word.textContent = '' })
+    for (let row = 0; row < columns[0].length && id === run; row++) {
+      await Promise.all(columns.map((col) => typeWord(col[row], id)))
+    }
+  }
+
+  new IntersectionObserver(([entry]) => {
+    run++
+    if (entry.isIntersecting) typeAll(run)
+    else words.forEach((word) => { word.textContent = word.dataset.text })
+  }, { threshold: 0.35 }).observe(document.getElementById('beyond'))
+}
+
 // ---------- Animated counters ----------
 
 function formatCount(value, decimals, prefix, suffix) {
@@ -255,30 +338,69 @@ function formatCount(value, decimals, prefix, suffix) {
 
 console.assert(formatCount(2.5, 1, '$', 'M+') === '$2.5M+' && formatCount(95, 0, '', '%') === '95%', 'formatCount')
 
+function countUp(el, duration) {
+  if (el.dataset.counting) return
+  el.dataset.counting = 'yes'
+  const target = Number(el.dataset.target)
+  const decimals = Number(el.dataset.decimals || 0)
+  const prefix = el.dataset.prefix || ''
+  const suffix = el.dataset.suffix || ''
+  const start = performance.now()
+
+  function frame(now) {
+    const progress = duration ? Math.min((now - start) / duration, 1) : 1
+    const eased = 1 - Math.pow(1 - progress, 3)
+    el.textContent = formatCount(target * eased, decimals, prefix, suffix)
+    if (progress < 1) requestAnimationFrame(frame)
+    else delete el.dataset.counting
+  }
+  requestAnimationFrame(frame)
+}
+
+// A burst of small orange/gold sparks shot out from the number
+function fireSparks(card, number) {
+  const box = card.getBoundingClientRect()
+  const from = number.getBoundingClientRect()
+  const x = from.left - box.left + from.width / 2
+  const y = from.top - box.top + from.height / 2
+  const colors = ['var(--primary)', 'var(--hero-gold)', 'var(--coral)']
+
+  for (let i = 0; i < 16; i++) {
+    const spark = document.createElement('i') // not span: `.counter > span` is position: relative
+    spark.className = 'spark'
+    spark.style.left = `${x}px`
+    spark.style.top = `${y}px`
+    spark.style.background = spark.style.color = colors[i % colors.length]
+    card.appendChild(spark)
+    const angle = (i / 16) * Math.PI * 2 + Math.random() * 0.4
+    const distance = 50 + Math.random() * 60
+    spark.animate([
+      { transform: 'translate(-50%, -50%) scale(1)', opacity: 1 },
+      { transform: `translate(calc(-50% + ${Math.cos(angle) * distance}px), calc(-50% + ${Math.sin(angle) * distance}px)) scale(0)`, opacity: 0 },
+    ], { duration: 700 + Math.random() * 300, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' }).onfinish = () => spark.remove()
+  }
+}
+
 function setupCounters() {
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (!entry.isIntersecting) return
       observer.unobserve(entry.target)
-      const el = entry.target
-      const target = Number(el.dataset.target)
-      const decimals = Number(el.dataset.decimals || 0)
-      const prefix = el.dataset.prefix || ''
-      const suffix = el.dataset.suffix || ''
-      const duration = reducedMotion.matches ? 0 : 1600
-      const start = performance.now()
-
-      function frame(now) {
-        const progress = duration ? Math.min((now - start) / duration, 1) : 1
-        const eased = 1 - Math.pow(1 - progress, 3)
-        el.textContent = formatCount(target * eased, decimals, prefix, suffix)
-        if (progress < 1) requestAnimationFrame(frame)
-      }
-      requestAnimationFrame(frame)
+      countUp(entry.target, reducedMotion.matches ? 0 : 1600)
     })
   }, { threshold: 0.5 })
 
   document.querySelectorAll('.counter-value').forEach((element) => observer.observe(element))
+
+  // Hover: count again and fire sparks (mouse only, skipped for reduced motion)
+  document.querySelectorAll('.counter').forEach((card) => {
+    card.addEventListener('pointerenter', (event) => {
+      const number = card.querySelector('.counter-value')
+      if (event.pointerType === 'touch' || reducedMotion.matches || number.dataset.counting) return
+      countUp(number, 900)
+      fireSparks(card, number)
+    })
+  })
 }
 
 // ---------- Start ----------
@@ -292,3 +414,4 @@ setupDialogs()
 setupFadeUps()
 setupCounters()
 setupMotion()
+setupTyping()

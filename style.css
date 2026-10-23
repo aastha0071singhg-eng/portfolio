@@ -1455,6 +1455,208 @@ a {
   transition: translate 0.4s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.15s;
 }
 
+/* ---------- Beyond ---------- */
+.beyond {
+  position: relative;
+  height: clamp(480px, 68vh, 640px);
+  background: var(--primary);
+  overflow: hidden;
+}
+
+.beyond-sticky {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+}
+
+.beyond-title {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 3vh;
+}
+
+/* Four copies of the word on top of each other; the back ones peek out lower down */
+.beyond-stack {
+  display: grid;
+}
+
+.beyond-layer {
+  position: relative; /* keeps paint order = DOM order, so the white layer stays in front */
+  grid-area: 1 / 1;
+  font-family: "Bamboly Demo", sans-serif;
+  font-size: clamp(5.5rem, 20vw, 17rem);
+  font-weight: 400;
+  line-height: 0.85;
+  letter-spacing: -0.025em;
+  user-select: none;
+  /* --px is the mouse position across the section (-1..1); back layers move more, for depth */
+  transform: translate(calc(var(--px, 0) * var(--depth) * -1px), var(--ly));
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.beyond-layer:nth-child(1) { color: #89cff0; --ly: 36px; --depth: 26; }
+.beyond-layer:nth-child(2) { color: var(--primary); --ly: 24px; --depth: 18; }
+.beyond-layer:nth-child(3) { color: #90ee90; --ly: 12px; --depth: 10; }
+.beyond-layer:nth-child(4) { color: #fff; --ly: 0px; --depth: 4; }
+
+.beyond-words {
+  position: absolute;
+  inset: 0 0 4vh;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding-inline: 6vw;
+  pointer-events: none;
+}
+
+.beyond-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.beyond-col-right {
+  align-items: flex-end;
+  text-align: right;
+}
+
+.beyond-word {
+  font-family: "Poppins", sans-serif;
+  font-size: clamp(1.3rem, 3.8vw, 3.6rem);
+  font-weight: 500;
+  line-height: 1.1;
+  color: rgb(255 255 255 / 0.8);
+  text-transform: uppercase;
+  user-select: none;
+  transition: transform 0.05s linear;
+}
+
+/* Typing effect (script.js): keep each row's height while its word is empty */
+.beyond-word {
+  min-height: 1.1em;
+}
+
+.beyond-word.is-typing::after {
+  content: "";
+  display: inline-block;
+  width: 0.06em;
+  height: 0.85em;
+  margin-left: 0.06em;
+  vertical-align: -0.05em;
+  background: currentColor;
+  animation: caret-blink 1s steps(2, end) infinite;
+}
+
+.beyond-figure {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+  perspective: 1200px;
+}
+
+.beyond-figure img {
+  position: absolute;
+  bottom: -40px; /* hang below the section so the tilt never reveals the photo's bottom edge */
+  left: 50%;
+  width: auto;
+  max-width: none;
+  height: 88%; /* photo is landscape (chest-up), so less than the spec's 115% to keep the face in view */
+  transform-origin: 50% 100%;
+  transform: translateX(-50%) translate(calc(var(--px, 0) * 22px), calc(var(--py, 0) * 10px)) rotateY(calc(var(--px, 0) * 7deg)) rotateX(calc(var(--py, 0) * -4deg));
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.beyond-marquee {
+  overflow: hidden;
+  padding-block: 32px;
+  background: #fff;
+}
+
+.beyond-track {
+  display: flex;
+  width: max-content;
+  white-space: nowrap;
+  animation: marquee 18s linear infinite;
+}
+
+.beyond-track > span {
+  flex-shrink: 0;
+  padding-right: 0.25em;
+  font-family: "Bamboly Demo", sans-serif;
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  line-height: 1;
+  color: var(--primary);
+  text-transform: uppercase;
+  user-select: none;
+}
+
+@media (max-width: 767px) {
+  .beyond-title { padding-top: 2vh; }
+  .beyond-layer:nth-child(1) { --ly: 18px; }
+  .beyond-layer:nth-child(2) { --ly: 12px; }
+  .beyond-layer:nth-child(3) { --ly: 6px; }
+  .beyond-words { padding-inline: 3vw; }
+  .beyond-col { gap: 0.25rem; }
+  .beyond-sticky { z-index: 11; } /* words over the photo, which fills the width here */
+  .beyond-figure img { height: 55%; }
+  .beyond-marquee { padding-block: 24px; }
+}
+
+/* Counter hover: sparks fired from the number (script.js creates them) */
+.spark {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  box-shadow: 0 0 10px 1px currentColor;
+  pointer-events: none;
+}
+
+/* ---------- Hover backgrounds (script.js sets --bx/--by to the cursor) ---------- */
+.bg-interactive {
+  position: relative;
+  isolation: isolate;
+}
+
+/* z-index -1 inside an isolated section: above its background, below its content */
+.bg-interactive::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
+}
+
+.bg-interactive.is-hover::after {
+  opacity: 1;
+}
+
+.bg-glow::after {
+  background: radial-gradient(640px circle at var(--bx, 50%) var(--by, 50%), var(--tint), transparent 60%);
+}
+
+.bg-dots::after {
+  background-image: radial-gradient(var(--tint) 1.3px, transparent 1.6px);
+  background-size: 22px 22px;
+  -webkit-mask-image: radial-gradient(280px circle at var(--bx, 50%) var(--by, 50%), #000, transparent 75%);
+  mask-image: radial-gradient(280px circle at var(--bx, 50%) var(--by, 50%), #000, transparent 75%);
+}
+
+/* Hero: above the video and its dark overlay, still below the text (z-index 3) */
+.hero.bg-interactive::after { z-index: 1; }
+
+.bg-gold { --tint: color-mix(in oklab, var(--hero-gold) 22%, transparent); }
+.bg-coral { --tint: color-mix(in oklab, var(--coral) 55%, transparent); }
+.bg-orange { --tint: color-mix(in oklab, var(--primary) 12%, transparent); }
+.bg-ink { --tint: color-mix(in oklab, var(--ink) 22%, transparent); }
+.bg-white { --tint: rgb(255 255 255 / 0.22); }
+
 /* Hidden on screen, still read by screen readers */
 .sr-only {
   position: absolute;
