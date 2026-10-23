@@ -1486,7 +1486,7 @@ a {
 .beyond-layer {
   position: relative; /* keeps paint order = DOM order, so the white layer stays in front */
   grid-area: 1 / 1;
-  font-family: "Bamboly Demo", sans-serif;
+  font-family: "Lilita One", sans-serif;
   font-size: clamp(5.5rem, 20vw, 17rem);
   font-weight: 400;
   line-height: 0.85;
@@ -1586,7 +1586,7 @@ a {
 .beyond-track > span {
   flex-shrink: 0;
   padding-right: 0.25em;
-  font-family: "Bamboly Demo", sans-serif;
+  font-family: "Lilita One", sans-serif;
   font-size: clamp(2.5rem, 6vw, 5rem);
   line-height: 1;
   color: var(--primary);
