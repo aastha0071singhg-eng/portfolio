@@ -3,12 +3,256 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#0C0C0C" />
-    <meta name="description" content="Jack is a 3D creator crafting striking visuals, brands, and digital experiences." />
-    <title>Jack -- 3D Creator</title>
+    <meta name="description" content="Aastha Singh — Project Manager & Quality Analyst. Strategy, coordination, design thinking, and quality that help digital products move forward with confidence." />
+    <title>Aastha Singh — Project Manager</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" />
+    <link rel="stylesheet" href="style.css?v=13" />
+    <script src="script.js?v=13" defer></script>
   </head>
   <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <!-- Icons (used below with <svg><use href="#icon-name" /></svg>) -->
+    <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+      <defs>
+        <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></symbol>
+        <symbol id="i-arrow-up-right" viewBox="0 0 24 24"><path d="M7 7h10v10" /><path d="M7 17 17 7" /></symbol>
+        <symbol id="i-asterisk" viewBox="0 0 24 24"><path d="M12 6v12" /><path d="M17.196 9 6.804 15" /><path d="m6.804 9 10.392 6" /></symbol>
+        <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5" /></symbol>
+        <symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /><path d="m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z" /></symbol>
+        <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z" /><path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12" /><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17" /></symbol>
+        <symbol id="i-play" viewBox="0 0 24 24"><path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z" fill="currentColor" /></symbol>
+        <symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><path d="M16 3.128a4 4 0 0 1 0 7.744" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><circle cx="9" cy="7" r="4" /></symbol>
+        <symbol id="i-volume-off" viewBox="0 0 24 24"><path d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z" /><line x1="22" x2="16" y1="9" y2="15" /><line x1="16" x2="22" y1="9" y2="15" /></symbol>
+        <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></symbol>
+      </defs>
+    </svg>
+
+    <main class="portfolio" id="top">
+      <!-- HEADER -->
+      <header class="site-header page-width">
+        <a href="#top" class="brand" aria-label="Portfolio home">
+          <span class="brand-symbol"><svg class="icon" width="24" height="24"><use href="#i-asterisk" /></svg></span>
+          Aastha Singh<span class="brand-period">.</span>
+        </a>
+        <nav class="nav-links" aria-label="Main navigation">
+          <a href="#about">Profile</a>
+          <a href="#projects">Projects</a>
+          <a href="#about-me">About me</a>
+          <button type="button" class="btn btn-contact contact-nav" data-open-dialog="contact-dialog">
+            Let’s talk <svg class="icon" width="14" height="14"><use href="#i-arrow-up-right" /></svg>
+          </button>
+        </nav>
+      </header>
+
+      <!-- HERO -->
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-media">
+          <video
+            id="hero-video"
+            class="hero-art"
+            src="assets/hero-intro.mp4"
+            poster="assets/hero-intro-poster.jpg"
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="auto"
+            aria-label="Aastha's portfolio introduction"
+          ></video>
+          <div class="hero-video-blend" aria-hidden="true"></div>
+          <button type="button" id="hero-video-hit" class="hero-video-hit" aria-label="Pause hero video">
+            <span class="hero-video-play">
+              <svg class="icon icon-play" width="26" height="26"><use href="#i-play" /></svg>
+              <svg class="icon icon-muted" width="26" height="26"><use href="#i-volume-off" /></svg>
+            </span>
+          </button>
+        </div>
+        <div class="hero-overlay" aria-hidden="true"></div>
+
+        <div class="hero-content page-width reveal">
+          <div class="hero-kicker eyebrow"><span class="status-dot"></span> PROJECT MANAGER · QUALITY ANALYST</div>
+          <h1 id="hero-title" class="hero-headline"><span class="line" style="--i: 0"><span>Good ideas</span></span><span class="line" style="--i: 1"><span>deserve</span></span><span class="line hero-gold-text" style="--i: 2"><span>great execution.</span></span></h1>
+          <p class="hero-description">I bring strategy, coordination, design thinking, and quality together to help digital products move forward with confidence.</p>
+          <div class="hero-actions">
+            <a href="#projects" class="btn btn-portfolio">Explore my work <svg class="icon" width="16" height="16"><use href="#i-arrow-up-right" /></svg></a>
+            <a href="https://www.linkedin.com/in/aastha-singh0001" target="_blank" rel="noopener noreferrer" class="btn watch-button">
+              Let’s connect <svg class="icon" width="14" height="14"><use href="#i-arrow-up-right" /></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="hero-foot page-width">
+          <span>PLAN. BUILD. TEST. DELIVER.</span>
+          <span>6+ YEARS EXPERIENCE</span>
+        </div>
+      </section>
+
+      <!-- SKILL STRAPS (items are added by script.js) -->
+      <div class="straps" aria-label="Core capabilities">
+        <div class="strap strap-0"><div class="strap-track"></div></div>
+        <div class="strap strap-1" aria-hidden="true"><div class="strap-track"></div></div>
+        <div class="strap strap-2" aria-hidden="true"><div class="strap-track"></div></div>
+      </div>
+
+      <!-- ID CARD -->
+      <section id="about" aria-label="The person behind the plan">
+        <div class="identity-scene">
+          <div class="identity-titles" aria-hidden="true">
+            <span>PROJECT<br />MANAGER</span>
+            <span>TEAM<br />CONNECTOR</span>
+            <span>STRATEGIC<br />THINKER</span>
+            <span>MOMENTUM<br />MAKER</span>
+          </div>
+
+          <div class="badge-suspension">
+            <div class="lanyard"></div>
+            <div class="badge-clip"></div>
+            <button type="button" id="badge" class="badge-interaction" aria-label="Flip ID card" aria-pressed="false">
+              <span id="id-card" class="id-card">
+                <span class="id-face id-front">
+                  <span class="id-notch"></span>
+                  <span class="id-topline"><span>THE PERSON BEHIND THE PLAN</span><span class="id-pm">PM.</span></span>
+                  <span class="id-portrait">
+                    <img src="assets/aastha-portrait.jpg" alt="Aastha Singh" />
+                    <span class="portrait-caption">PEOPLE · PROCESS · PROGRESS</span>
+                  </span>
+                  <span class="id-name">Aastha Singh.</span>
+                  <span class="id-role">Project Manager &amp; Quality Analyst</span>
+                  <span class="id-bottom">
+                    <span>
+                      <span class="id-availability">BUILT ON COLLABORATION · DRIVEN BY CLARITY</span>
+                      <span class="id-email">aas0071thasingh@gmail.com</span>
+                    </span>
+                    <span class="id-qr">
+                      <svg viewBox="0 0 31 31" shape-rendering="crispEdges" role="img" aria-label="QR code to email aas0071thasingh@gmail.com"><path fill="#ffffff" d="M0 0h31v31H0z"/><path stroke="#000000" d="M1 1.5h7m3 0h6m2 0h1m1 0h1m1 0h7M1 2.5h1m5 0h1m2 0h1m1 0h1m1 0h4m1 0h1m3 0h1m5 0h1M1 3.5h1m1 0h3m1 0h1m1 0h1m1 0h2m1 0h1m1 0h1m2 0h1m3 0h1m1 0h3m1 0h1M1 4.5h1m1 0h3m1 0h1m1 0h3m1 0h1m1 0h2m1 0h1m1 0h1m2 0h1m1 0h3m1 0h1M1 5.5h1m1 0h3m1 0h1m1 0h1m1 0h1m4 0h2m1 0h3m1 0h1m1 0h3m1 0h1M1 6.5h1m5 0h1m1 0h2m1 0h1m5 0h1m2 0h1m1 0h1m5 0h1M1 7.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M9 8.5h1m5 0h1m1 0h1m2 0h2M1 9.5h1m1 0h5m2 0h1m1 0h1m4 0h2m4 0h5M1 10.5h2m1 0h3m1 0h3m2 0h4m1 0h4m1 0h1m1 0h5M2 11.5h2m3 0h2m3 0h6m7 0h1M2 12.5h2m4 0h2m1 0h1m2 0h1m1 0h1m3 0h2m1 0h1m1 0h2M7 13.5h2m2 0h2m2 0h2m1 0h1m1 0h1m1 0h1m1 0h1m1 0h4M2 14.5h2m2 0h1m1 0h2m1 0h3m2 0h2m1 0h3m1 0h1m1 0h2m1 0h2M3 15.5h1m1 0h3m2 0h1m1 0h2m5 0h1m1 0h2m2 0h1M1 16.5h1m4 0h1m2 0h1m1 0h1m3 0h1m1 0h1m7 0h2M1 17.5h3m1 0h4m2 0h1m1 0h1m4 0h1m1 0h1m3 0h1m2 0h2M1 18.5h3m1 0h1m4 0h3m1 0h3m1 0h4m1 0h1m1 0h5M1 19.5h1m1 0h3m1 0h3m1 0h1m1 0h5m1 0h1m1 0h1m2 0h1m1 0h2M1 20.5h1m3 0h2m1 0h4m1 0h2m1 0h2m2 0h1m1 0h1m2 0h1M1 21.5h1m2 0h4m2 0h3m2 0h1m2 0h1m2 0h7m1 0h1M9 22.5h1m2 0h2m3 0h5m3 0h1m1 0h3M1 23.5h7m4 0h1m3 0h2m2 0h2m1 0h1m1 0h1m1 0h1M1 24.5h1m5 0h1m1 0h4m2 0h1m1 0h1m1 0h3m3 0h2m1 0h1M1 25.5h1m1 0h3m1 0h1m1 0h1m3 0h1m4 0h2m1 0h5m1 0h2M1 26.5h1m1 0h3m1 0h1m1 0h4m2 0h1m1 0h4m3 0h1m3 0h2M1 27.5h1m1 0h3m1 0h1m1 0h1m3 0h1m1 0h4m3 0h5m1 0h1M1 28.5h1m5 0h1m4 0h1m2 0h1m3 0h1m1 0h6m1 0h1M1 29.5h7m1 0h1m2 0h1m2 0h2m1 0h1m1 0h1m1 0h1m2 0h1m1 0h1"/></svg>
+                    </span>
+                  </span>
+                </span>
+
+                <span class="id-face id-back" aria-hidden="true">
+                  <span class="id-notch"></span>
+                  <span class="id-back-heading">How I Create Impact<span>Clear direction. Connected teams. Meaningful results.</span></span>
+                  <span class="badge-skill">
+                    <svg class="icon" width="24" height="24"><use href="#i-compass" /></svg>
+                    <span><strong>Plan with clarity</strong><small>Turn ideas into actionable roadmaps.</small></span>
+                  </span>
+                  <span class="badge-skill">
+                    <svg class="icon" width="24" height="24"><use href="#i-users" /></svg>
+                    <span><strong>Align people</strong><small>Bring teams together around shared goals.</small></span>
+                  </span>
+                  <span class="badge-skill">
+                    <svg class="icon" width="24" height="24"><use href="#i-layers" /></svg>
+                    <span><strong>Drive delivery</strong><small>Turn plans into measurable progress.</small></span>
+                  </span>
+                  <span class="badge-signoff">Better collaboration.<br />Smarter execution.</span>
+                  <span class="id-bottom">
+                    <svg class="icon" width="14" height="14"><use href="#i-check" /></svg>
+                    <span class="barcode"></span>
+                  </span>
+                </span>
+              </span>
+            </button>
+          </div>
+
+          <div class="identity-scene-footer">
+            <span>TURNING COMPLEXITY INTO CLARITY<span class="typing-caret">|</span></span>
+            <svg class="icon" width="20" height="20"><use href="#i-asterisk" /></svg>
+            <a href="#projects">THE PERSON BEHIND THE PLAN <span>↓</span></a>
+          </div>
+        </div>
+      </section>
+
+      <!-- 01 PROJECTS (mosaic tiles are built by script.js from the `projects` list) -->
+      <section id="projects" class="showcase">
+        <div class="page-width showcase-inner">
+          <div class="showcase-copy">
+            <div class="section-label eyebrow fade-up"><span>01 /</span> SELECTED PROJECTS</div>
+            <h2 class="showcase-title wipe" style="--d: 0.08s">Projects<br />I’ve moved<br />from brief<br />to launch</h2>
+            <p class="showcase-text fade-up" style="--d: 0.16s">A growing collection of the products, launches and process improvements I’ve planned, coordinated and tested — from the first kickoff to a <strong>confident release</strong>.</p>
+            <div class="showcase-actions fade-up" style="--d: 0.24s">
+              <button type="button" class="btn btn-dark-pill" data-open-dialog="contact-dialog">
+                Start a project <svg class="icon" width="16" height="16"><use href="#i-arrow-up-right" /></svg>
+              </button>
+              <a href="#about-me" class="showcase-link">About me <span><svg class="icon" width="14" height="14"><use href="#i-arrow-up-right" /></svg></span></a>
+            </div>
+          </div>
+          <ul id="project-list" class="sr-only" aria-label="Projects"></ul>
+          <div class="mosaic" aria-hidden="true">
+            <div class="mosaic-col"></div>
+            <div class="mosaic-col"></div>
+            <div class="mosaic-col"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 02 ABOUT ME -->
+      <section id="about-me" class="section about-me">
+        <div class="page-width">
+          <div class="section-label eyebrow fade-up"><span>02 /</span> ABOUT ME</div>
+          <div class="about-me-grid">
+            <h2 class="section-title fade-up" style="--d: 0.08s">Calm plans.<br />Clear teams.<br />Confident launches<span class="text-primary">.</span></h2>
+            <div>
+              <p class="about-bio fade-up" style="--d: 0.16s">I’m a Project Manager and Quality Analyst who turns ambitious ideas into well-run delivery. I align stakeholders, keep teams unblocked, and make sure what ships is tested, on time and built to last.</p>
+              <!-- Edit these facts to match your profile -->
+              <dl class="facts fade-up" style="--d: 0.24s">
+                <div><dt>Experience</dt><dd>6+ years</dd></div>
+                <div><dt>Industries</dt><dd>SaaS · E-commerce · IT services</dd></div>
+                <div><dt>Location</dt><dd>India · Open to remote</dd></div>
+                <div><dt>Availability</dt><dd><span class="status-live"></span>Open to new opportunities</dd></div>
+              </dl>
+            </div>
+          </div>
+
+          <!-- Counters: change data-target / data-prefix / data-suffix to your real numbers -->
+          <div class="counters">
+            <div class="counter fade-up"><span class="counter-value" data-target="40" data-suffix="+">40+</span><span class="counter-label">Projects delivered</span></div>
+            <div class="counter fade-up" style="--d: 0.08s"><span class="counter-value" data-target="25" data-suffix="+">25+</span><span class="counter-label">Team members led</span></div>
+            <div class="counter fade-up" style="--d: 0.16s"><span class="counter-value" data-target="2.5" data-decimals="1" data-prefix="$" data-suffix="M+">$2.5M+</span><span class="counter-label">Budget managed</span></div>
+            <div class="counter fade-up" style="--d: 0.24s"><span class="counter-value" data-target="95" data-suffix="%">95%</span><span class="counter-label">On-time delivery</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CONTACT -->
+      <section id="contact" class="contact-section">
+        <div class="page-width contact-layout">
+          <div>
+            <div class="eyebrow">GOOD THINGS START WITH A CONVERSATION.</div>
+            <h2>Have a big idea?<br />Let’s move it forward.</h2>
+          </div>
+          <button type="button" class="btn btn-portfolio contact-circle" aria-label="Start a conversation" data-open-dialog="contact-dialog">
+            <svg class="icon" width="36" height="36"><use href="#i-arrow-up-right" /></svg>
+          </button>
+        </div>
+      </section>
+
+      <footer class="site-footer page-width">
+        <span>© 2026 PM.PORTFOLIO</span>
+        <span class="footer-tagline">MADE WITH PURPOSE. ALWAYS IN MOTION.</span>
+        <div class="footer-links">
+          <a href="#projects">Projects ↗</a>
+          <a href="#top">Back to top ↑</a>
+        </div>
+      </footer>
+    </main>
+
+    <!-- DIALOGS -->
+    <dialog id="contact-dialog" class="dialog dialog-wide" aria-labelledby="contact-dialog-title">
+      <button type="button" class="dialog-close" aria-label="Close"><svg class="icon" width="16" height="16"><use href="#i-x" /></svg></button>
+      <div class="dialog-header">
+        <h2 id="contact-dialog-title" class="dialog-title">Let’s make something happen.</h2>
+        <p class="dialog-description">Have a project, a role, or an idea in mind? I’d love to hear about it.</p>
+      </div>
+      <div class="dialog-contact">
+        <svg class="icon text-primary" width="40" height="40"><use href="#i-asterisk" /></svg>
+        <p class="dialog-big">Great projects begin with people.</p>
+        <div class="dialog-links">
+          <a href="mailto:aasthas.co@gmail.com" class="btn btn-portfolio">Email me <svg class="icon" width="16" height="16"><use href="#i-arrow-right" /></svg></a>
+          <a href="https://www.linkedin.com/in/aastha-singh0001" target="_blank" rel="noopener noreferrer" class="btn btn-contact">LinkedIn <svg class="icon" width="14" height="14"><use href="#i-arrow-up-right" /></svg></a>
+        </div>
+      </div>
+    </dialog>
+
   </body>
 </html>
