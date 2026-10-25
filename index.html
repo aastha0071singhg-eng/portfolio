@@ -45,8 +45,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Poppins:wght@500&family=Lilita+One&display=swap" />
-    <link rel="stylesheet" href="style.css?v=34" />
-    <script src="script.js?v=34" defer></script>
+    <link rel="stylesheet" href="style.css?v=39" />
+    <script src="script.js?v=37" defer></script>
   </head>
   <body>
     <!-- Icons (used below with <svg><use href="#icon-name" /></svg>) -->
@@ -116,6 +116,7 @@
             <a href="https://www.linkedin.com/in/aastha-singh0001" target="_blank" rel="noopener noreferrer" class="btn watch-button">
               Let’s connect <svg class="icon" width="14" height="14"><use href="#i-arrow-up-right" /></svg>
             </a>
+            <button type="button" class="hero-watch" data-open-dialog="video-dialog" aria-label="Play intro video"><svg class="icon" width="18" height="18"><use href="#i-play" /></svg></button>
           </div>
         </div>
 
@@ -245,7 +246,7 @@
           <div class="counters">
             <div class="counter fade-up"><span class="counter-value" data-target="20" data-suffix="+">20+</span><span class="counter-label">Projects delivered</span></div>
             <div class="counter fade-up" style="--d: 0.08s"><span class="counter-value" data-target="25" data-suffix="+">25+</span><span class="counter-label">Team members led</span></div>
-            <div class="counter fade-up" style="--d: 0.16s"><span class="counter-value" data-target="1" data-prefix="$" data-suffix="M+">$1M+</span><span class="counter-label">Budget managed</span></div>
+            <div class="counter fade-up" style="--d: 0.16s"><span class="counter-value" data-target="500" data-suffix="+">500+</span><span class="counter-label">Bugs caught before launch</span></div>
             <div class="counter fade-up" style="--d: 0.24s"><span class="counter-value" data-target="95" data-suffix="%">95%</span><span class="counter-label">On-time delivery</span></div>
           </div>
         </div>
@@ -300,6 +301,10 @@
     </main>
 
     <!-- DIALOGS -->
+    <dialog id="video-dialog" class="dialog dialog-video" aria-label="Intro video">
+      <button type="button" class="dialog-close" aria-label="Close"><svg class="icon" width="16" height="16"><use href="#i-x" /></svg></button>
+      <video src="assets/hero-intro.mp4" poster="assets/hero-intro-poster.jpg" controls playsinline preload="none"></video>
+    </dialog>
     <dialog id="contact-dialog" class="dialog dialog-wide" aria-labelledby="contact-dialog-title">
       <button type="button" class="dialog-close" aria-label="Close"><svg class="icon" width="16" height="16"><use href="#i-x" /></svg></button>
       <div class="dialog-header">

@@ -59,6 +59,20 @@ function setupHeroVideo() {
     }
   })
 
+  // Sound stops once the visitor scrolls the hero away (video keeps playing) and returns when they come back
+  let soundWasOn = false
+  new IntersectionObserver(([entry]) => {
+    if (entry.intersectionRatio < 0.75) {
+      if (!video.muted) {
+        soundWasOn = true
+        video.muted = true
+      }
+    } else if (soundWasOn) {
+      soundWasOn = false
+      video.muted = false
+    }
+  }, { threshold: 0.75 }).observe(document.querySelector('.hero'))
+
   applyReducedMotion()
   reducedMotion.addEventListener('change', applyReducedMotion)
 }
@@ -128,6 +142,12 @@ function setupDialogs() {
     const dialog = document.getElementById(button.dataset.openDialog)
     button.addEventListener('click', () => dialog.showModal())
   })
+
+  // Mobile intro video: start on open, stop on close
+  const introDialog = document.getElementById('video-dialog')
+  const introVideo = introDialog.querySelector('video')
+  introDialog.addEventListener('close', () => introVideo.pause())
+  document.querySelector('.hero-watch').addEventListener('click', () => introVideo.play().catch(() => undefined))
 
   document.querySelectorAll('dialog').forEach((dialog) => {
     dialog.querySelector('.dialog-close').addEventListener('click', () => dialog.close())

@@ -442,6 +442,43 @@ a {
   transform: rotate(45deg);
 }
 
+/* Play icon that opens the intro video; only shown on phones */
+.hero-watch {
+  display: none;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--hero-gold);
+  border-radius: 50%;
+  color: var(--hero-gold);
+  transition: background 0.2s, color 0.2s;
+}
+
+.hero-watch:hover {
+  background: var(--hero-gold);
+  color: var(--hero-background);
+}
+
+.dialog.dialog-video {
+  max-width: 48rem;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  background: #000;
+}
+
+.dialog.dialog-video video {
+  display: block;
+  width: 100%;
+}
+
+.dialog.dialog-video .dialog-close {
+  z-index: 1;
+  top: 10px;
+  right: 10px;
+  color: #fff;
+}
+
 .hero-foot {
   position: absolute;
   bottom: 22px;
@@ -1332,6 +1369,24 @@ a {
   will-change: translate;
 }
 
+/* Hero: kicker, copy, buttons and footer follow the headline in */
+.hero-kicker,
+.hero-description,
+.hero-actions,
+.hero-foot {
+  animation: hero-fade 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.hero-kicker { animation-delay: 0.05s; }
+.hero-description { animation-delay: 0.55s; }
+.hero-actions { animation-delay: 0.7s; }
+.hero-foot { animation-delay: 0.95s; }
+
+@keyframes hero-fade {
+  from { opacity: 0; transform: translateY(24px); filter: blur(6px); }
+}
+
+
 /* ID card: titles slide in from the sides, badge drops in on its lanyard */
 .js .identity-titles > span {
   opacity: 0;
@@ -1602,7 +1657,8 @@ a {
   .beyond-words { padding-inline: 3vw; }
   .beyond-col { gap: 0.25rem; }
   .beyond-sticky { z-index: 11; } /* words over the photo, which fills the width here */
-  .beyond-figure img { height: 55%; }
+  .beyond { height: 400px; }
+  .beyond-figure img { height: 80%; } /* fills the gap under the title on narrow screens */
   .beyond-marquee { padding-block: 24px; }
 }
 
@@ -1701,9 +1757,9 @@ a {
   .nav-links { gap: 15px; }
   .nav-links > a { display: none; }
 
-  .hero { align-items: flex-start; height: auto; min-height: 820px; }
-  .hero-media { top: auto; bottom: 0; left: 0; height: 260px; -webkit-mask-image: none; mask-image: none; }
-  .hero-art { object-fit: contain; object-position: center bottom; }
+  .hero { align-items: flex-start; height: auto; min-height: 0; padding-bottom: 72px; }
+  .hero-media { display: none; } /* phones get the play icon (.hero-watch) instead */
+  .hero-watch { display: grid; }
   .hero-overlay { background: var(--hero-mobile-overlay); }
   .hero-content { padding-top: 120px; padding-bottom: 0; }
   .hero-kicker { margin-bottom: 22px; font-size: 8px; }
